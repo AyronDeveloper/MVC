@@ -37,6 +37,16 @@ class Route extends Navigate{
     }
 
     public static function combo($request,$link,$method){
+        $request_method=$_SERVER["REQUEST_METHOD"];
+
+        foreach($request as $res){
+            $res=strtoupper($res);
+
+            if($request_method==$res){
+                self::navigate($link,$method);
+            }
+
+        }
 
     }
 }
