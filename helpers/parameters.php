@@ -1,12 +1,12 @@
 <?php
-function url(){
+function url($ruta=""){
     $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
     
     $host=$_SERVER['HTTP_HOST'];
     
     $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
 
-    return $url;
+    return $url.$ruta;
 }
 
 

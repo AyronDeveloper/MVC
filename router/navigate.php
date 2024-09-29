@@ -42,7 +42,7 @@ class Navigate{
         //echo $url_next;
         $existeHttps=strpos($url_next,"?");
     
-        if($existeHttps!=false){
+        if($existeHttps!==false){
             $url_next=substr($url_next,0,$existeHttps);
         }
 
