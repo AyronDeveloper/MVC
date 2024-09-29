@@ -12,18 +12,22 @@ $dotenv=Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 require_once("./autoload.php");
-require_once("./rutas.php");
-require_once("./configs/db.php");
 require_once("./helpers/parameters.php");
+require_once("./configs/db.php");
+require_once("./router/route.php");
+require_once("./router/api.php");
+require_once("./router/errorNavigate.php");
 require_once("./helpers/utils.php");
-require_once("./helpers/validation.php");
+require_once("./helpers/vali.php");
 
 
+Route::controller(homeController::class)->group(function(){
+    Route::get("","index");
+});
 
-//nombre de la ruta / controller / metodo
-$rutas=[
-    ["","home", "index"]
-];
+Api::controller(apiController::class)->group(function(){
+    Api::get("","index");
+});
 
-rutas($url_next,$rutas);
+ErrorNavigate::error();
 ?>
