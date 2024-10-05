@@ -6,4 +6,4 @@ class Database{
         return $db;
     }
 }
-?> 
+?>
