@@ -10,6 +10,28 @@ function url($ruta=""){
 }
 
 
+function assets($ruta=""){
+    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
+    
+    $host=$_SERVER['HTTP_HOST'];
+    
+    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
+
+    return $url."assets/".$ruta;
+}
+
+
+function libraries($ruta=""){
+    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
+    
+    $host=$_SERVER['HTTP_HOST'];
+    
+    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
+
+    return $url."library/".$ruta;
+}
+
+
 function fixURL(){
     $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
 
