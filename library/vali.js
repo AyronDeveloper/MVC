@@ -1,14 +1,14 @@
-class Vali{
+const Vali=(()=>{
+    
+    var count=0
+    var result=true
+    var validators=""
 
-    #count=0
-    #countGlobal=[]
-    #result=true
-    #validators=""
+    var error=false
+    var errorMessage=""
 
-    #error=false
-    #errorMessage=""
-    #voidMessage(msg){
-        if(msg==null || msg.trim()==""){
+    const voidMessage=(msg)=>{
+        if(msg==null && msg.trim()==""){
             return true
         }else{
             return false
@@ -16,28 +16,29 @@ class Vali{
     }
 
     /* */
-    #required(value){
-        if(value.trim()!=""){
-            this.#result=true
-            this.#error=false
+    const required=(value)=>{
+        value=value.trim()
+        if(value!="" && value!=null){
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isString(value){
-        if(typeof value == "string"){
-            this.#result=true
-            this.#error=false
+    const isString=(value)=>{
+        if(typeof value=="string"){
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
         
     }
-    #selectRadio(value){
+    const selectRadio=(value)=>{
         
         const radio=(array)=>{
             var arrayLen
@@ -57,15 +58,15 @@ class Vali{
         }
 
         if(radio(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #selectCheckBox(value,limit=null,len=null){
+    const selectCheckBox=(value,limit=null,len=null)=>{
         //console.log(limit)
         //console.log(len)
         //console.log(value)
@@ -105,216 +106,216 @@ class Vali{
         }
     
         if(check(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
 
     }
-    #isNumber(value){
+    const isNumber=(value)=>{
         if(!isNaN(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isInteger(value){
+    const isInteger=(value)=>{
         if(Number.isInteger(parseInt(value)) && !value.includes(".")){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isFloat(value){
+    const isFloat=(value)=>{
         if(!isNaN(value) && value.includes(".")){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isBoolean(value,result=null){
+    const isBoolean=(value,result=null)=>{
         if(typeof value=="boolean"){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
 
             if(result!=null){
                 const boolean=JSON.parse(result)
                 if(boolean){
                     if(value){
-                        this.#result=true
-                        this.#error=false
+                        result=true
+                        error=false
                     }else{
-                        this.#count++
-                        this.#result=false
-                        this.#error=true
+                        count++
+                        result=false
+                        error=true
                     }
                 }else{
                     if(!value){
-                        this.#result=true
-                        this.#error=false
+                        result=true
+                        error=false
                     }else{
-                        this.#count++
-                        this.#result=false
-                        this.#error=true
+                        count++
+                        result=false
+                        error=true
                     }
                 }
             }
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #lenMin(value, min){
+    const lenMin=(value, min)=>{
         
         if(value.length>=min){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #lenMax(value, max){
+    const lenMax=(value, max)=>{
         if(value.length<=max){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isArray(value,limit=null,len=null){
+    const isArray=(value,limit=null,len=null)=>{
         if(Array.isArray(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
 
             if(limit!=null && len!=null){
-                console.log(value)
+                //console.log(value)
                 if(limit=="min"){
                     if(value.length>=len){
-                        this.#result=true
-                        this.#error=false
+                        result=true
+                        error=false
                     }else{
-                        this.#count++
-                        this.#result=false
-                        this.#error=true
+                        count++
+                        result=false
+                        error=true
                     }
 
                 }else if(limit=="max"){
                     if(value.length<=len){
-                        this.#result=true
-                        this.#error=false
+                        result=true
+                        error=false
                     }else{
-                        this.#count++
-                        this.#result=false
-                        this.#error=true
+                        count++
+                        result=false
+                        error=true
                     }
                 }
 
             }
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #differentTo(value, different){
+    const differentTo=(value, different)=>{
         if(value!=different){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #equalTo(value, equal){
+    const equalTo=(value, equal)=>{
         if(value==equal){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isEmail(value){
+    const isEmail=(value)=>{
         const email=(email)=>{
             const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/
             return regex.test(email)
         }
 
         if(email(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #valitedDate(value){
+    const valitedDate=(value)=>{
         const formatDate=/^\d{4}-\d{2}-\d{2}$/
 
         if(formatDate.test(value)){
             const date=new Date(value)
             if(!isNaN(date) || date.toString()!="Invalid Date"){
                 //console.log(date.toString())
-                this.#result=true
-                this.#error=false
+                result=true
+                error=false
             }else{
                 //console.log(date.toString())
-                this.#count++
-                this.#result=false
-                this.#error=true
+                count++
+                result=false
+                error=true
             }
 
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #uploadFile(value){
+    const uploadFile=(value)=>{
         //console.log(value)
         if(value instanceof  FileList){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         
             if(value.length>0){
-                this.#result=true
-                this.#error=false
+                result=true
+                error=false
             }else{
-                this.#count++
-                this.#result=false
-                this.#error=true
+                count++
+                result=false
+                error=true
             }
         }else if(value instanceof File){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
             //console.error("Debe ser FileList o File")
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #sizeFile(value, more, size, UA=null){
+    const sizeFile=(value, more, size, UA=null)=>{
         //console.log(value)
         let FileSize
 
@@ -323,9 +324,9 @@ class Vali{
         }else if(value instanceof File){
             FileSize=value.size
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
             return
         }
         //console.log(FileSize)
@@ -337,48 +338,48 @@ class Vali{
 
             if(more=="min"){
                 if(size<=sizeKB){
-                    this.#result=true
-                    this.#error=false
+                    result=true
+                    error=false
                 }else{
-                    this.#count++
-                    this.#result=false
-                    this.#error=true
+                    count++
+                    result=false
+                    error=true
                 }
             }
             else if(more=="max"){
                 if(size>=sizeKB){
-                    this.#result=true
-                    this.#error=false
+                    result=true
+                    error=false
                 }else{
-                    this.#count++
-                    this.#result=false
-                    this.#error=true
+                    count++
+                    result=false
+                    error=true
                 }
             }
         }else{
             if(more=="min"){
                 if(size<=FileSize){
-                    this.#result=true
-                    this.#error=false
+                    result=true
+                    error=false
                 }else{
-                    this.#count++
-                    this.#result=false
-                    this.#error=true
+                    count++
+                    result=false
+                    error=true
                 }
             }
             else if(more=="max"){
                 if(size>=FileSize){
-                    this.#result=true
-                    this.#error=false
+                    result=true
+                    error=false
                 }else{
-                    this.#count++
-                    this.#result=false
-                    this.#error=true
+                    count++
+                    result=false
+                    error=true
                 }
             }
         }
     }
-    #typeFile(value, mine){
+    const typeFile=(value, mine)=>{
         //console.log(mine)
 
         let FileType
@@ -387,88 +388,104 @@ class Vali{
         }else if(value instanceof File){
             FileType=value.type
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
             return
         }
 
         if(mine.includes(FileType)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isURL(value){
+    const isURL=(value)=>{
         try{
             new URL(value)
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }catch(_){
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #isAlpha(value){
+    const isAlpha=(value)=>{
         const regex=/^[A-Za-z]+$/
         if(regex.test(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
-    #notUse(value,invalid){
-        //console.log(invalid)
-        const escaped=invalid.replace(/[-[\]{}()*+?.,\\^$|#\s]/g,"\\$&")
-        const regex=new RegExp(`[${escaped}]`)
+    const notUse=(value,invalid)=>{
+
+        const patronesEscapados=invalid.map(caracter=>{
+            //!@#$%^&*()
+            //,.!?;:
+            
+            if (caracter === "0-9") {
+                return "0-9"
+            } else if (caracter === "A-Z") {
+                return "A-Z"
+            } else if (caracter === "a-z") {
+                return "a-z"
+            } else if (caracter === "\\s") {
+                return "\\s"
+            }
+            return caracter.replace(/[-\/\\^$.*+?()[\]{}|]/g,'\\$&')
+        })
+    
+        const regex=new RegExp(`[${patronesEscapados.join('')}]`)
+
         if(!regex.test(value)){
             //console.log("No tiene lo solcitado")
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
             //console.log("Tiene lo solcitado")
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
 
     }
-    #isColor(value){
+    const sColor=(value)=>{
         //console.log(value)
         const regex=/^#[0-9A-Fa-f]{6}$/
         if(regex.test(value)){
-            this.#result=true
-            this.#error=false
+            result=true
+            error=false
         }else{
-            this.#count++
-            this.#result=false
-            this.#error=true
+            count++
+            result=false
+            error=true
         }
     }
     /* */
 
 
-    formStart=()=>{
-        this.#count=0
+    const formStart=()=>{
+        count=0
     }
 
-    formVali=(val,validations)=>{
-        this.#result=true
-        this.#errorMessage=""
-        this.#error=false
+    const formVali=(val,validations)=>{
+        result=true
+        errorMessage=""
+        error=false
 
         let params=[]
 
         validations.forEach((validate)=>{
 
-            if(this.#result){
+            if(result){
                 if(validate.search(/\|/)!= -1){
                     let array=validate.split(/\|/)
 
@@ -477,116 +494,116 @@ class Vali{
                     params=array.slice(1)
                 }
 
-                this.#validators=validate
+                validators=validate
 
 
                 switch(validate){
                     //COMPRUEBA SI UN INPUT ESTA VACIO
                     case "required":
-                        this.#required(val)
+                        required(val)
                         break;
 
                     //VALIDA QUE SOLO SEA CADENAS
                     case "isString":
-                        this.#isString(validations)
+                        isString(validations)
                         break;
 
                     //VERIFICA SI SELECCIONO UN INPUT RADIO
                     case "selectRadio":
-                        this.#selectRadio(val)
+                        selectRadio(val)
                         break;
 
                     case "selectCheckBox":
-                        this.#selectCheckBox(val,params[0]?params[0]:null,params[1]?params[1]:null)
+                        selectCheckBox(val,params[0]?params[0]:null,params[1]?params[1]:null)
                         break;
 
                     //VERIFICA SI ES UN NUMERO
                     case "isNumber":
-                        this.#isNumber(val)
+                        isNumber(val)
                         break;
                     
                     //VERIFICA QUE SEA UN NUMERO ENTERO
                     case "isInteger":
-                        this.#isInteger(val)
+                        isInteger(val)
                         break;
 
                     //VERIFICA QUE SEA UN DECIMAL
                     case "isFloat":
-                        this.#isFloat(val)
+                        isFloat(val)
                         break;
 
                     //VERIFICA SI ES UN VALOR BOOLEANO
                     case "isBoolean":
-                        this.#isBoolean(val,params[0]?params[0]:null)
+                        isBoolean(val,params[0]?params[0]:null)
                         break;
 
                     //MINIMA CANTIDAD DE CARACTERES
                     case "lenMin":
-                        this.#lenMin(val, params[0])
+                        lenMin(val, params[0])
                         break;
 
                     //MAXIMO CANTIDAD DE CARACTERES
                     case "lenMax":
-                        this.#lenMax(val, params[0])
+                        lenMax(val, params[0])
                         break;
                     
                     //VERIFICA SI ES UN ARRAY
                     case "isArray":
-                        this.#isArray(val,params[0]?params[0]:null,params[1]?params[1]:null)
+                        isArray(val,params[0]?params[0]:null,params[1]?params[1]:null)
                         break;
 
                     //VERIFICA QUE SEA DIFERENTE AL VALOR PREDETERMINADO
                     case "differentTo":
-                        this.#differentTo(val, params[0])
+                        differentTo(val, params[0])
                         break;
 
                     //VERIFICA QUE SE IGUAL A VALOR PREDETERMINADO
                     case "equalTo":
-                        this.#equalTo(val, params[0])
+                        equalTo(val, params[0])
                         break;
 
                     //VERIFICA SI ES UN EMAIL Y SE SIGUE SU FORMATO
                     case "isEmail":
-                        this.#isEmail(val)
+                        isEmail(val)
                         break;
 
                     //VALIDA QUE LA FECHA ESTE EN EL FORMATO YYYY-MM-DD
                     case "valitedDate":
-                        this.#valitedDate(val)
+                        valitedDate(val)
                         break;
 
                     //VALIDA SI SE CARGO UN ARCHIVO
                     case "uploadFile":
-                        this.#uploadFile(val)
+                        uploadFile(val)
                         break;
 
                     //VALIDA EL PESO DE UN ARCHIVO EN KB O bytes
                     case "sizeFile":
-                        this.#sizeFile(val,params[0],params[1],params[2]?params[2]:null)
+                        sizeFile(val,params[0],params[1],params[2]?params[2]:null)
                         break;
                     
                     //VALIDA EL TIPO DE ARCHIVO QUE SE SOLICITA
                     case "typeFile":
-                        this.#typeFile(val,params)
+                        typeFile(val,params)
                         break;
                     
                     //VALIDA SI EL FORMATO DE URL ES CORRECTO
                     case "isURL":
-                        this.#isURL(val)
+                        isURL(val)
                         break;
 
                     //VALIDA CARACTERES ALFABETICOS
                     case "isAlpha":
-                        this.#isAlpha(val)
+                        isAlpha(val)
                         break;
 
                     case "notUse":
-                        this.#notUse(val,params[0])
+                        notUse(val,params)
                         break;
 
                     //VALIDA QUE TENGA EL FORMATO DE COLOR #000000
                     case "isColor":
-                        this.#isColor(val)
+                        isColor(val)
                         break;
                 }
 
@@ -595,52 +612,52 @@ class Vali{
         })
     }
 
-    customVali=(name,validation,result=true)=>{
+    const customVali=(name,validation,result=true)=>{
         //console.log(validation)
         
-        this.#validators=name
+        validators=name
 
         if(result){
             if(validation){
-                this.#result=true
-                this.#error=false
+                result=true
+                error=false
             }else{
-                this.#count++
-                this.#result=false
-                this.#error=true
+                count++
+                result=false
+                error=true
             }
         }else{
             if(!validation){
-                this.#result=true
-                this.#error=false
+                result=true
+                error=false
             }else{
-                this.#count++
-                this.#result=false
-                this.#error=true
+                count++
+                result=false
+                error=true
             }
         }
     }
 
-    formError=(vali, message=null)=>{
-        if(this.#error){
+    const formError=(vali, message=null)=>{
+        if(error){
 
-            if(!this.#result && this.#validators==vali){
-                this.#error=false
-                return this.#errorMessage=this.#voidMessage(message)?`${vali} Error`:message
+            if(!result && validators==vali){
+                error=false
+                return errorMessage=voidMessage(message)?`${vali} Error`:message
             }else{
-                this.#errorMessage=""
-                this.#error=true
-                return this.#errorMessage
+                errorMessage=""
+                error=true
+                return errorMessage
             }
 
         }else{
-            return this.#errorMessage
+            return errorMessage
         }
     }
 
-    resultError=(functionFailed=null,functionSucces=null)=>{
+    const resultError=(functionFailed=null,functionSucces=null)=>{
         if(functionFailed!=null && functionFailed!=null){
-            if(!this.#result){
+            if(!result){
                 //SOLO QUIERO QUE SE EJECUTE LA PRIMERA FUNCION CALLBACK
                 functionFailed()
             }else{
@@ -649,100 +666,94 @@ class Vali{
             }
 
         }else{
-            return this.#result?false:true
+            return !result?false:true
         }
     }
 
-    formFinal=()=>{
-        if(this.#count==0){
-            //this.#countGlobal.push(true)
-            return true
-        }else{
-            //this.#countGlobal.push(false)
-            return false
-        }
+    const formFinal=()=>{
+
+        return count==0?true:false
+
+    }
+    
+    const globalStart=(identifier,values)=>{
+
+        let objValues={}
+
+        values.forEach(val=>{
+            objValues[val]=`${val} false`
+        })
+
+        sessionStorage.setItem(identifier,JSON.stringify(objValues))
 
     }
 
-    globalForm=(identifier=null, name="")=>{
-        if(identifier!=null){
-            let arrayExists=this.#countGlobal.find(data=>data[0]==identifier)
-    
-            if(arrayExists){
-                let deleteIndice
-    
-                if(name!=""){
-                    if(arrayExists.includes(`${name} true`)){
-                        deleteIndice=`${name} true`
-                    }else if(arrayExists.includes(`${name} false`)){
-                        deleteIndice=`${name} false`
-                    }
-                    
-                    let indice=arrayExists.indexOf(deleteIndice)
-                    arrayExists.splice(indice, 1)
-                    //console.log(arrayExists)
-    
-                    arrayExists.push(this.#count==0?(`${name} true`).trim():(`${name} false`).trim())
-                    //console.log(arrayExists)
-    
-                }else{
-                    arrayExists.push(this.#count==0?(`true`).trim():(`false`).trim())
-                }
+    const globalForm=(identifier, name)=>{ 
+        let result=false
+
+        if(identifier!=null || identifier!=""){
+
+            //console.log(count)
+            const storage=JSON.parse(sessionStorage.getItem(identifier))
+            //console.log(storage[name])
+
+            if(count==0){
+                storage[name]=`${name} true`
+                //console.log(storage[name]=`${name} true`)
+                //console.log(storage)
+                result=true
             }else{
-                this.#countGlobal.push([identifier,this.#count==0?(`${name} true`).trim():(`${name} false`).trim()])
-            }
-            //console.log(this.#countGlobal)
-    
-            if(this.#count==0){
-                //this.#countGlobal.push(true)
-                return true
-            }else{
-                //this.#countGlobal.push(false)
-                return false
+                storage[name]=`${name} false`
+                //console.log(storage[name]=`${name} false`)
+                //console.log(storage)
+                result=false
             }
 
+            sessionStorage.setItem(identifier,JSON.stringify(storage))
+
+            //console.log(localStorage.getItem(identifier))
+            //console.log(Object.values(storage))
+
         }
+
+        return result
+
     }
 
-    globalFinal=(identifier)=>{
-        //console.log(this.#countGlobal)
+    const globalFinal=(identifier)=>{
+        let result=false
 
-        const arrayFind=this.#countGlobal.find(data=>data[0]==identifier)
+        if(identifier!=null && identifier!=""){
+            const storage=sessionStorage.getItem(identifier)
 
-        if(!arrayFind.some(array=>array.includes("false"))){
-            this.#countGlobal=this.#countGlobal.filter(data=>data[0]!=identifier)
-            //console.log(this.#countGlobal)
-            return true
-        }else{
-            var findFalse=[]
-            var findTrue=[]
+            console.log(storage)
+            const array=Object.values(JSON.parse(storage))
+            //console.log(array)
+            //console.log(array.some(array=>array.includes("false")))
 
-            arrayFind.forEach((array, index)=>{
-                if(array=="false"){
-                    findFalse.push(index)
-                }
-                if(array=="true"){
-                    findTrue.push(index)
-                }
-            })
-
-            if(findFalse!=0){
-                findFalse.forEach(array=>{
-                    arrayFind.splice(array, 1)
-                })
+            if(!array.some(array=>array.includes("false"))){
+                result=true
             }
-
-            if(findTrue.length!=0){
-                findTrue.forEach(array=>{
-                    arrayFind.splice(array, 1)
-                })
-            }
-
-            //this.#countGlobal=this.#countGlobal.filter(data=>data[0]!=identifier)
-            //console.log(this.#countGlobal)
-            return false
         }
+
+        console.log(sessionStorage.getItem(identifier))
+        return result
+
     }
 
 
-}
+    return {
+
+        formStart,
+        formVali,
+        formError,
+        resultError,
+        formFinal,
+        customVali,
+        globalStart,
+        globalForm,
+        globalFinal,
+
+    }   
+
+})()
