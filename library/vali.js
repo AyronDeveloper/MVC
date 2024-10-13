@@ -457,7 +457,7 @@ const Vali=(()=>{
         }
 
     }
-    const sColor=(value)=>{
+    const isColor=(value)=>{
         //console.log(value)
         const regex=/^#[0-9A-Fa-f]{6}$/
         if(regex.test(value)){

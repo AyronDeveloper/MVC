@@ -409,6 +409,37 @@ class Vali{
         return $this;
     }
 
+
+    public function notUse($prohi, $error=null, $message=null){
+        if($this->result){
+            $patron="/[";
+
+            foreach($prohi as $caracter){
+                if(strpos($caracter,"-")!==false){
+                    $patron.=$caracter;
+                }else{
+                    $patron.=preg_quote($caracter,"/");
+                }
+            }
+
+            $patron.="]/";
+
+            if(!preg_match($patron,$this->variable)){
+                $this->result=true;
+                $this->message=$this->analisis($message)?"validated":$message;
+            }else{
+                $this->result=false;
+                $this->variable="";
+                $this->message=$this->analisis($error)?"notUse Error":$error;
+            }
+                
+            $_SESSION["formValidation"][$this->name]=$this->variable;
+            $_SESSION["formValidation"][$this->name."Result"]=$this->result;
+            $_SESSION["formValidation"][$this->name."Men"]=$this->message;
+        }
+        return $this;
+    }
+
     //isBoolean
     public function isBoolean($name, $bool,$error=null,$message=null){
         $this->name="";
