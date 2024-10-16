@@ -666,7 +666,7 @@ const Vali=(()=>{
             }
 
         }else{
-            return !result?false:true
+            return !result?true:false
         }
     }
 

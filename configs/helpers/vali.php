@@ -4,6 +4,7 @@ class Vali{
     private $variable;
     private $result;
     private $message;
+    private $count=0;
 
 
     private function analisis($analisis){
@@ -514,8 +515,10 @@ class Vali{
 
 
     //create
-    public static function create($name,$valor,$message=null){
+    public static function create($name,$result,$valor=null,$message=null){
         $_SESSION["formValidation"][$name]=$valor;
+        $_SESSION["formValidation"][$name."Result"]=$result;
+        
         if($message!=null){
             $_SESSION["formValidation"][$name."Men"]=$message;
         }
@@ -524,11 +527,29 @@ class Vali{
 
 
     public function results($value=null){
+        if($this->result==false){
+            $this->count++;
+        }
         if($value=="value"){
             return $this->variable;
-        }else{
+        }
+        elseif($value=="result"){
+            return $this->result;
+        }
+        elseif($value=="message"){
+            return $this->message;
+        }
+        else{
             return array("variable"=>$this->variable,"result"=>$this->result,"message"=>$this->message);
         }
+    }
+
+    public function errors(){
+        $result=false;
+
+        if($this->count==0) $result=true;
+
+        return $result;
     }
 
 
@@ -554,7 +575,7 @@ class Vali{
     }
 
     public static function success($name){
-        if(isset($_SESSION["formValidation"][$name]) && $_SESSION["formValidation"][$name."Result"]==true){
+        if(isset($_SESSION["formValidation"][$name."Result"]) && $_SESSION["formValidation"][$name."Result"]==true){
             return true;
         }
     }
@@ -577,13 +598,13 @@ class Vali{
     }
     
     public static function failed($name){
-        if(isset($_SESSION["formValidation"][$name]) && $_SESSION["formValidation"][$name."Result"]==false){
+        if(isset($_SESSION["formValidation"][$name."Result"]) && $_SESSION["formValidation"][$name."Result"]==false){
             return true;
         }
     }
 
     public static function showMessage($name){
-        if(isset($_SESSION["formValidation"][$name])){
+        if(isset($_SESSION["formValidation"][$name."Men"])){
             return $_SESSION["formValidation"][$name."Men"];
         }
     }

@@ -1,5 +1,5 @@
-<?php 
-require_once("./router/navigate.php");
+<?php
+require_once("./configs/router/navigate.php");
 
 class ErrorNavigate extends Navigate{
     

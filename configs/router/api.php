@@ -1,12 +1,13 @@
-<?php 
-require_once("./router/navigate.php");
+<?php
+require_once("./configs/router/navigate.php");
 
-class Route extends Navigate{
+class Api extends Navigate{
     
     public static function get($link,$method){
         $request_method=$_SERVER["REQUEST_METHOD"];
 
         if($request_method=="GET"){
+            $link=$link==""?"api":"api/$link";
             self::navigate($link,$method);
         }
 
@@ -16,6 +17,7 @@ class Route extends Navigate{
         $request_method=$_SERVER["REQUEST_METHOD"];
 
         if($request_method=="POST"){
+            $link=$link==""?"api":"api/$link";
             self::navigate($link,$method);
         }
     }
@@ -24,6 +26,7 @@ class Route extends Navigate{
         $request_method=$_SERVER["REQUEST_METHOD"];
 
         if($request_method=="PUT"){
+            $link=$link==""?"api":"api/$link";
             self::navigate($link,$method);
         }
     }
@@ -32,6 +35,7 @@ class Route extends Navigate{
         $request_method=$_SERVER["REQUEST_METHOD"];
 
         if($request_method=="DELETE"){
+            $link=$link==""?"api":"api/$link";
             self::navigate($link,$method);
         }
     }
@@ -43,11 +47,13 @@ class Route extends Navigate{
             $res=strtoupper($res);
 
             if($request_method==$res){
+                $link=$link==""?"api":"api/$link";
                 self::navigate($link,$method);
             }
 
         }
 
     }
+
 }
 ?>
