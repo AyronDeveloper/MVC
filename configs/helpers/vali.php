@@ -581,7 +581,7 @@ class Vali{
     }
     //value
     public static function value($name,$aditional=null){
-        if(isset($_SESSION["formValidation"][$name]) && $_SESSION["formValidation"][$name]!=""){
+        if(isset($_SESSION["formValidation"][$name])){
             return $_SESSION["formValidation"][$name];
         }
 

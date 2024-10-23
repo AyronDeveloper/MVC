@@ -15,7 +15,6 @@ const Vali=(()=>{
         }
     }
 
-    /* */
     const required=(value)=>{
         value=value.trim()
         if(value!="" && value!=null){
@@ -67,9 +66,6 @@ const Vali=(()=>{
         }
     }
     const selectCheckBox=(value,limit=null,len=null)=>{
-        //console.log(limit)
-        //console.log(len)
-        //console.log(value)
 
         const check=(array)=>{
             var arrayLen
@@ -82,8 +78,6 @@ const Vali=(()=>{
             }
 
             if(limit!=null && len!=null){
-                //console.log(arrayLen)
-                //console.log("No estan vacio limit ni len")
                 for(var i=0;i<arrayLen;i++){
                     if(array[i].checked){
                         count++
@@ -95,7 +89,6 @@ const Vali=(()=>{
                     return count<=len?true:false
                 }
             }else{
-                //console.log("Estan vacio limit ni len")
                 for(var i=0;i<arrayLen;i++){
                     if(array[i].checked){
                         return true
@@ -205,7 +198,6 @@ const Vali=(()=>{
             error=false
 
             if(limit!=null && len!=null){
-                //console.log(value)
                 if(limit=="min"){
                     if(value.length>=len){
                         result=true
@@ -275,11 +267,9 @@ const Vali=(()=>{
         if(formatDate.test(value)){
             const date=new Date(value)
             if(!isNaN(date) || date.toString()!="Invalid Date"){
-                //console.log(date.toString())
                 result=true
                 error=false
             }else{
-                //console.log(date.toString())
                 count++
                 result=false
                 error=true
@@ -292,7 +282,6 @@ const Vali=(()=>{
         }
     }
     const uploadFile=(value)=>{
-        //console.log(value)
         if(value instanceof  FileList){
             result=true
             error=false
@@ -309,14 +298,12 @@ const Vali=(()=>{
             result=true
             error=false
         }else{
-            //console.error("Debe ser FileList o File")
             count++
             result=false
             error=true
         }
     }
     const sizeFile=(value, more, size, UA=null)=>{
-        //console.log(value)
         let FileSize
 
         if(value instanceof  FileList){
@@ -329,7 +316,6 @@ const Vali=(()=>{
             error=true
             return
         }
-        //console.log(FileSize)
 
         let bytes=1024
 
@@ -380,7 +366,6 @@ const Vali=(()=>{
         }
     }
     const typeFile=(value, mine)=>{
-        //console.log(mine)
 
         let FileType
         if(value instanceof  FileList){
@@ -428,8 +413,6 @@ const Vali=(()=>{
     const notUse=(value,invalid)=>{
 
         const patronesEscapados=invalid.map(caracter=>{
-            //!@#$%^&*()
-            //,.!?;:
             
             if (caracter === "0-9") {
                 return "0-9"
@@ -446,11 +429,9 @@ const Vali=(()=>{
         const regex=new RegExp(`[${patronesEscapados.join('')}]`)
 
         if(!regex.test(value)){
-            //console.log("No tiene lo solcitado")
             result=true
             error=false
         }else{
-            //console.log("Tiene lo solcitado")
             count++
             result=false
             error=true
@@ -458,7 +439,6 @@ const Vali=(()=>{
 
     }
     const isColor=(value)=>{
-        //console.log(value)
         const regex=/^#[0-9A-Fa-f]{6}$/
         if(regex.test(value)){
             result=true
@@ -693,27 +673,16 @@ const Vali=(()=>{
 
         if(identifier!=null || identifier!=""){
 
-            //console.log(count)
             const storage=JSON.parse(sessionStorage.getItem(identifier))
-            //console.log(storage[name])
-
             if(count==0){
                 storage[name]=`${name} true`
-                //console.log(storage[name]=`${name} true`)
-                //console.log(storage)
                 result=true
             }else{
                 storage[name]=`${name} false`
-                //console.log(storage[name]=`${name} false`)
-                //console.log(storage)
                 result=false
             }
 
             sessionStorage.setItem(identifier,JSON.stringify(storage))
-
-            //console.log(localStorage.getItem(identifier))
-            //console.log(Object.values(storage))
-
         }
 
         return result
@@ -728,8 +697,6 @@ const Vali=(()=>{
 
             console.log(storage)
             const array=Object.values(JSON.parse(storage))
-            //console.log(array)
-            //console.log(array.some(array=>array.includes("false")))
 
             if(!array.some(array=>array.includes("false"))){
                 result=true

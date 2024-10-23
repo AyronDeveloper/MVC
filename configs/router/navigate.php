@@ -38,74 +38,34 @@ class Navigate{
 
         $url_next=self::url();
 
-        $error=true;
-        //echo $url_next;
         $existeHttps=strpos($url_next,"?");
     
         if($existeHttps!==false){
             $url_next=substr($url_next,0,$existeHttps);
         }
 
-                
-        //VERIFICA SI EXISTE /: ESO SIGNIFICA QUE SE ESTA SOLICITANDO PARAMETROS PARA LA FUNCION
-        $existeParametros=strpos($link,"/:");
+        if(substr($url_next,-1)!="/"){
+            $url_next=$url_next."/";
+        }
 
-        //VALIDA TIENE /:
-        if($existeParametros!=false){
-            //GUARDAR LA CADENA DESPUES DEL PRIMER /:
-            $parametros=substr($link,$existeParametros);
-            //GUARDA LA CADENA ANTES DEL PRIMER /:
-            $link=substr($link,0,$existeParametros);
+        $paramOpcional=preg_replace('/:\w+\?/','([^/]+)?',$link);
+        $paramObliga=preg_replace('/:\w+/','([^/]+)',$paramOpcional);
+        $param='#^'.str_replace('/','\/', $paramObliga).'(\/)?$#';
 
-            //echo $url[0];
-            
-            //echo "<br>";
+        if(preg_match($param,$url_next,$matches)){
+            array_shift($matches);
 
-            //echo $parametros;
-
-            //echo "<br>";
-            
-            //CREAR UN ARRAY EN BASE /: Y LIMPIA PARA QUE NO HAYA ESPACIO
-            $arrayParametros=explode("/:",$parametros);
-            $arrayParametros=array_values(array_filter($arrayParametros, fn($array)=>$array!=""));
-            //var_dump($arrayParametros);
-
-            //echo "<br>";
-            
-            $urlSinParametros=substr($url_next,0,$existeParametros);
-            //echo $urlSinParametros;
-
-            //echo "<br>";
-
-            $parametrosUrl=substr($url_next,$existeParametros);
-            //echo $parametrosUrl;
-
-            //echo "<br>";
-            if($urlSinParametros==$link){
-                self::$statusGlobal=false;
-
-                $parametrosUrl=explode("/",$parametrosUrl);
-                $parametrosUrl=array_values(array_filter($parametrosUrl, fn($array)=>$array!=""));
-                //var_dump($parametrosUrl);
-                //echo "<br>";
-    
-                $nameMetodo=$method;
-    
-                $controlador=self::$controller;
-                call_user_func_array([$controlador,$nameMetodo],$parametrosUrl);
-                return;
+            $deleteSlash=array_search("/",$matches);
+            if($deleteSlash!==false){
+                array_splice($matches,$deleteSlash,1);
             }
 
-        }else{
-            if($url_next==$link){
-                self::$statusGlobal=false;
+            self::$statusGlobal=false;
+
+            $nameMetodo=$method;
     
-                $nameMetodo=$method;
-    
-                $controlador=self::$controller;
-                $controlador->$nameMetodo();
-                return;
-            }
+            $controlador=self::$controller;
+            call_user_func_array([$controlador,$nameMetodo],$matches);
         }
     
     }
