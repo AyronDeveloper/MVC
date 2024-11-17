@@ -14,63 +14,6 @@ const Vali=(()=>{
             return false
         }
     }
-    const generarCodigo=(result)=>{
-        const lower=result?"acegikmoqsuwy":"bdfhjlnprtvxz"
-        const upper=result?"BDFHJLNPRTVXZ":"ACEGIKMOQSUWY"
-        const number=result?"02468":"13579"
-        const symbol="!@#$%^&*()_-+=?><[]"
-
-        const cifrado=`${lower}${number}${upper}${symbol}`
-
-        let codigo=""
-        let longitud=Math.floor(Math.random()*(16-10))+10
-        for(let i=0;i<longitud;i++){
-            const randomIndex=Math.floor(Math.random()*cifrado.length)
-            codigo+=cifrado[randomIndex]
-        }
-        return codigo;
-    }
-    const verify=(codigo)=>{
-        const cifrado="bdfhjlnprtvxz13579!@#$%^&*()_-+=?><[]ACEGIKMOQSUWY"
-        const f=cifrado.split("")
-        
-        for(let i=0;i<codigo.length;i++){
-            const letra=codigo[i]
-            
-            if(!f.includes(letra)){
-                return false
-            }
-        }
-
-    }
-    const identificarF=(codigo)=>{
-        const cifrado="bdfhjlnprtvxz13579!@#$%^&*()_-+=?><[]ACEGIKMOQSUWY"
-        const f=cifrado.split("")
-        
-        for(let i=0;i<codigo.length;i++){
-            const letra=codigo[i]
-            
-            if(!f.includes(letra)){
-                return false
-            }
-        }
-        
-        return true
-    }
-    const identificarT=(codigo)=>{
-        const cifrado="acegikmoqsuwy02468!@#$%^&*()_-+=?><[]BDFHJLNPRTVXZ"
-        const t=cifrado.split("")
-
-        for(let i=0;i<codigo.length;i++){
-            const letra=codigo[i]
-            
-            if(!t.includes(letra)){
-                return false
-            }
-        }
-
-        return true
-    }
 
     const required=(value)=>{
         value=value.trim()
@@ -84,15 +27,15 @@ const Vali=(()=>{
         }
     }
     const isString=(value)=>{
-        if(typeof value=="string"){
+        const regex=/^[A-Za-zñÑáéíóúÁÉÍÓÚ]+$/
+        if(regex.test(value)){
             result=true
             error=false
         }else{
             count++
             result=false
             error=true
-        }
-        
+        }  
     }
     const selectRadio=(value)=>{
         
@@ -195,13 +138,13 @@ const Vali=(()=>{
             error=true
         }
     }
-    const isBoolean=(value,result=null)=>{
+    const isBoolean=(value,bool=null)=>{
         if(typeof value=="boolean"){
             result=true
             error=false
 
-            if(result!=null){
-                const boolean=JSON.parse(result)
+            if(bool!=null){
+                const boolean=JSON.parse(bool)
                 if(boolean){
                     if(value){
                         result=true
@@ -456,28 +399,16 @@ const Vali=(()=>{
             error=true
         }
     }
-    const isAlpha=(value)=>{
-        const regex=/^[A-Za-z]+$/
-        if(regex.test(value)){
-            result=true
-            error=false
-        }else{
-            count++
-            result=false
-            error=true
-        }
-    }
     const notUse=(value,invalid)=>{
 
         const patronesEscapados=invalid.map(caracter=>{
-            
-            if(caracter==="0-9") {
+            if (caracter==="0-9") {
                 return "0-9"
-            }else if(caracter==="A-Z") {
+            } else if (caracter==="A-Z") {
                 return "A-Z"
-            }else if(caracter==="a-z") {
+            } else if (caracter==="a-z") {
                 return "a-z"
-            }else if(caracter==="\\s") {
+            } else if (caracter==="\\s") {
                 return "\\s"
             }
             return caracter.replace(/[-\/\\^$.*+?()[\]{}|]/g,'\\$&')
@@ -542,7 +473,7 @@ const Vali=(()=>{
 
                     //VALIDA QUE SOLO SEA CADENAS
                     case "isString":
-                        isString(validations)
+                        isString(val)
                         break;
 
                     //VERIFICA SI SELECCIONO UN INPUT RADIO
@@ -629,11 +560,6 @@ const Vali=(()=>{
                         isURL(val)
                         break;
 
-                    //VALIDA CARACTERES ALFABETICOS
-                    case "isAlpha":
-                        isAlpha(val)
-                        break;
-
                     case "notUse":
                         notUse(val,params)
                         break;
@@ -650,6 +576,7 @@ const Vali=(()=>{
     }
 
     const customVali=(name,validation,result=true)=>{
+        
         validators=name
 
         if(result){
@@ -714,7 +641,7 @@ const Vali=(()=>{
         let objValues={}
 
         values.forEach(val=>{
-            objValues[val]=`${generarCodigo(false)}`
+            objValues[val]=`${val} false`
         })
 
         sessionStorage.setItem(identifier,JSON.stringify(objValues))
@@ -727,50 +654,33 @@ const Vali=(()=>{
         if(identifier!=null || identifier!=""){
 
             const storage=JSON.parse(sessionStorage.getItem(identifier))
+
             if(count==0){
-                storage[name]=`${generarCodigo(true)}`
+                storage[name]=`${name} true`
                 result=true
             }else{
-                storage[name]=`${generarCodigo(false)}`
+                storage[name]=`${name} false`
                 result=false
             }
 
             sessionStorage.setItem(identifier,JSON.stringify(storage))
+
         }
 
         return result
+
     }
 
-    const globalFinal=(identifier,option="")=>{
+    const globalFinal=(identifier)=>{
         let result=false
 
         if(identifier!=null && identifier!=""){
             const storage=sessionStorage.getItem(identifier)
+            const array=Object.values(JSON.parse(storage))
 
-            let objeto=JSON.parse(storage)
-
-            const claves=Object.keys(objeto)
-            const values=Object.values(objeto)
-
-            var error=0
-            values.forEach(cod=>{
-                if(identificarF(cod)){
-                    error++
-                }
-            })
-
-            if(error==0){
+            if(!array.some(array=>array.includes("false"))){
                 result=true
-
-                if(option=="reset"){
-                    claves.forEach(key=>{
-                        objeto[key]=`${generarCodigo(false)}`
-                    })
-
-                    sessionStorage.setItem(identifier, JSON.stringify(objeto));
-                }
             }
-
         }
 
         return result

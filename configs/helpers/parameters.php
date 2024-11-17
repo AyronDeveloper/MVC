@@ -21,7 +21,7 @@ function assets($ruta=""){
 }
 
 
-function libraries($ruta=""){
+function library($ruta=""){
     $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
     
     $host=$_SERVER['HTTP_HOST'];
@@ -29,6 +29,15 @@ function libraries($ruta=""){
     $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
 
     return $url."library/".$ruta;
+}
+function uploads($ruta=""){
+    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
+    
+    $host=$_SERVER['HTTP_HOST'];
+    
+    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
+
+    return $url."uploads/".$ruta;
 }
 
 
