@@ -1,11 +1,14 @@
 <?php 
-function controller_autoload($classname){
-    $filename="controllers/".$classname.".php";
-    if(file_exists($filename)){
-        include($filename);
+function app_autoload($classname){
+    if(strpos($classname,"Controller")!==false){
+        $filename=__DIR__ ."/controllers/".$classname.".php";
     }else{
-        include("controllers/errorController.php");
+        $filename=__DIR__."/models/".$classname.".php";
+    }
+    
+    if(file_exists($filename)){
+        require_once($filename);
     }
 }
-spl_autoload_register("controller_autoload");
+spl_autoload_register("app_autoload");
 ?>

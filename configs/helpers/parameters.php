@@ -1,43 +1,28 @@
 <?php
+function route(){
+    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
+    
+    $host=$_SERVER['HTTP_HOST'];
+    
+    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
+
+    return $url;
+}
+
 function url($ruta=""){
-    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
-    
-    $host=$_SERVER['HTTP_HOST'];
-    
-    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
-
-    return $url.$ruta;
+    return route().$ruta;
 }
-
-
 function assets($ruta=""){
-    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
-    
-    $host=$_SERVER['HTTP_HOST'];
-    
-    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
-
-    return $url."assets/".$ruta;
+    return route()."assets/".$ruta;
 }
-
-
 function library($ruta=""){
-    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
-    
-    $host=$_SERVER['HTTP_HOST'];
-    
-    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
-
-    return $url."library/".$ruta;
+    return route()."library/".$ruta;
 }
 function uploads($ruta=""){
-    $protocol=isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on'?'https':'http';
-    
-    $host=$_SERVER['HTTP_HOST'];
-    
-    $url=$protocol.'://'.$host."$_ENV[ROUTER_MAIN]";
-
-    return $url."uploads/".$ruta;
+    return route()."uploads/".$ruta;
+}
+function api($ruta=""){
+    return route()."api/".$ruta;
 }
 
 
