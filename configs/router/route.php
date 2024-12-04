@@ -16,14 +16,16 @@ class Route extends Navigate{
         $request_method=$_SERVER["REQUEST_METHOD"];
 
         if($request_method=="POST"){
-            self::navigate($link,$method);
+            if(!array_key_exists("PUT",$_POST) && !array_key_exists("DELETE",$_POST)){
+                self::navigate($link,$method);
+            }
         }
     }
 
     public static function put($link,$method){
         $request_method=$_SERVER["REQUEST_METHOD"];
 
-        if($request_method=="PUT"){
+        if($request_method=="POST" && isset($_POST["PUT"]) && $_POST["PUT"]=="_PUT"){
             self::navigate($link,$method);
         }
     }
@@ -31,7 +33,7 @@ class Route extends Navigate{
     public static function delete($link,$method){
         $request_method=$_SERVER["REQUEST_METHOD"];
 
-        if($request_method=="DELETE"){
+        if($request_method=="POST" && isset($_POST["DELETE"]) && $_POST["DELETE"]=="_DELETE"){
             self::navigate($link,$method);
         }
     }
