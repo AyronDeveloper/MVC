@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>PAGINA INDEX</h1>
-    <a href="<?=url()?>api">API</a>
+    <a href="<?=api()?>">API</a>
 </body>
 </html>

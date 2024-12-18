@@ -121,6 +121,33 @@ class Http{
     }
 
 
+    public static function uploadFile($file,$direction){
+        if($file["error"]==0){
+            $name=$file["name"];
+            $tmp=$file["tmp_name"];
+
+            if(!file_exists($direction)){
+                if(!mkdir($direction,0777,true)){
+                    return false;
+                }
+            }
+
+            if(substr($direction,-1)!=="/"){
+                $direction=$direction."/";
+            }
+
+            $result_save=false;
+            if(move_uploaded_file($tmp,$direction.$name)){
+                $result_save=true;
+            }
+            
+            return $result_save;
+        }
+
+        return false;
+    }
+
+
     public static function method($method){
 
         $method=strtoupper($method);
@@ -128,13 +155,13 @@ class Http{
         if($method=="PUT"){
             $input_put="<input type='hidden' name='PUT' value='_PUT'>";
 
-            return $input_put;
+            echo $input_put;
 
         }
         elseif($method=="DELETE"){
             $input_delete="<input type='hidden' name='DELETE' value='_DELETE'>";
 
-            return $input_delete;
+            echo $input_delete;
         }
 
     }

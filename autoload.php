@@ -1,8 +1,14 @@
 <?php 
 function app_autoload($classname){
+    $filename="";
+
     if(strpos($classname,"Controller")!==false){
         $filename=__DIR__ ."/controllers/".$classname.".php";
-    }else{
+    }
+    elseif(strpos($classname,"Cnx")===0){
+       $filename=__DIR__."/configs/database/".$classname.".php";
+    }
+    else{
         $filename=__DIR__."/models/".$classname.".php";
     }
     

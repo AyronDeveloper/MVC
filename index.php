@@ -13,7 +13,6 @@ $dotenv->load();
 
 require_once("./autoload.php");
 require_once("./configs/helpers/parameters.php");
-require_once("./configs/database/db.php");
 require_once("./configs/Http/Http.php");
 require_once("./configs/router/route.php");
 require_once("./configs/router/api.php");

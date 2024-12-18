@@ -45,7 +45,20 @@ class Route extends Navigate{
             $res=strtoupper($res);
 
             if($request_method==$res){
-                self::navigate($link,$method);
+                if($request_method=="GET"){
+                    self::navigate($link,$method);
+                }
+                if($request_method=="POST"){
+                    if(!array_key_exists("PUT",$_POST) && !array_key_exists("DELETE",$_POST)){
+                        self::navigate($link,$method);
+                    }
+                    elseif($_POST["PUT"]=="_PUT"){
+                        self::navigate($link,$method);
+                    }
+                    elseif($_POST["DELETE"]=="_DELETE"){
+                        self::navigate($link,$method);
+                    }
+                }
             }
 
         }
