@@ -165,6 +165,90 @@ class Http{
         }
 
     }
+    
+
+    public static function callApi($url,$method="GET",$data=[],$headers=[]){
+        $method=strtoupper($method);
+
+        $response="";
+
+        $ch=curl_init();
+        
+
+        function fixHeader($header,$default){
+            if(empty($header)){
+
+                $header=[];
+
+                $header=array_merge($default,$header);
+            }
+            return $header;
+        }
+
+        
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+        switch($method){
+
+            case "GET":
+
+                curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
+
+                
+                break;
+        
+            case "POST":
+                
+                curl_setopt($ch,CURLOPT_POST,true);
+                curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($data));
+
+                $header_post=["Content-Type: application/x-www-form-urlencoded"];
+                $headers=fixHeader($headers,$header_post);
+
+                break;
+        
+            case "PUT":
+
+                curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"PUT");
+
+                curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+                
+                $header_put=["Content-Type: application/json"];
+                $headers=fixHeader($headers,$header_put);
+
+                break;
+    
+            case "DELETE":
+
+                curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
+
+                curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+                
+                $header_delete=["Content-Type: application/json"];
+                $headers=fixHeader($headers,$header_delete);
+
+                break;
+            
+                
+        }
+
+        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+
+        $res=curl_exec($ch);
+
+        if(curl_errno($ch)){
+            echo "Error al hacer la solicitud: " .curl_error($ch);
+            curl_close($ch);
+            return;
+        }
+
+        curl_close($ch);
+        
+        $response=json_decode($res,true);
+
+        return $response;
+    }
 
 }
 ?>

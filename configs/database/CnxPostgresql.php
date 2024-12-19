@@ -1,9 +1,9 @@
 <?php 
-class DBpostgresql{
+class CnxPostgresql{
     public static function connect(){
-        $db=new PDO("mysql:host=$_ENV[DB_HOST]; dbname=$_ENV[DB_NAME]; ",$_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
-        $db->exec("SET NAMES 'utf8'");
-        return $db;
+        $pgsql=new PDO("pgsql:host=$_ENV[PGSQL_HOST];port=$_ENV[PGSQL_PORT];dbname=$_ENV[PGSQL_DBNAME];",$_ENV["PGSQL_USER"], $_ENV["PGSQL_PASSWORD"]);
+        $pgsql->exec("SET NAMES 'utf8'");
+        return $pgsql;
     }
 }
 ?>
